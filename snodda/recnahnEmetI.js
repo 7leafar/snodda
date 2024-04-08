@@ -410,8 +410,10 @@
                             if (ITEMENHANCERCommonItemIdList.length !== 0) {
                                 _g('artisanship&action=open');
                                 const n = ITEMENHANCERCommonItemIdList.join(',');
-                                _g(`enhancement&action=progress&item=${ITEMENHANCERItemId}&ingredients=${n}`);
-                                ITEMENHANCERItemWasEnhanced = true;
+                                _g(`enhancement&action=progress&item=${ITEMENHANCERItemId}&ingredients=${n}`).then(() => {
+                                    ITEMENHANCERItemWasEnhanced = true;
+                                    g.crafting.enhancement.newReceivedItem();
+                                });
                             }
                             ITEMENHANCERCommonItemIdList = [];
                             setTimeout(() => {
