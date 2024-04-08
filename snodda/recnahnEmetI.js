@@ -93,15 +93,6 @@
         IE_EmptySpaceInput.value = '';
     }
 
-    const IE_ItemsUsedText = document.createElement('span');
-    IE_ItemsUsedText.classList.add("leafar_addon-text");
-    IE_ItemsUsedText.textContent = 'Dodatek spalił 0 przedmiotów';
-
-    const IE_ItemsUsedButton = document.createElement('input');
-    IE_ItemsUsedButton.classList.add("leafar_addon-button");
-    IE_ItemsUsedButton.type = 'button';
-    IE_ItemsUsedButton.value = 'Zresetuj licznik';
-
     const SettingsChangedText = document.createElement('span');
     SettingsChangedText.classList.add("leafar_alert-text");
     SettingsChangedText.textContent = '-';
@@ -120,7 +111,7 @@
     function SubAddon_Constructor() {
         document.body.appendChild(ADDON_Main);
         ADDON_Main.append(ADDON_Top, ADDON_Col, ADDON_Close);
-        ADDON_Col.append(IE_EnabledText, IE_ItemFoundText, IE_ItemIdText, IE_UseUniqueItemsText, IE_EmptySpaceText, IE_ItemsUsedText, IE_ItemsUsedButton, SettingsChangedText, SaveSettingsButton);
+        ADDON_Col.append(IE_EnabledText, IE_ItemFoundText, IE_ItemIdText, IE_UseUniqueItemsText, IE_EmptySpaceText, SettingsChangedText, SaveSettingsButton);
         IE_EnabledText.appendChild(IE_EnabledCheck);
         IE_ItemIdText.appendChild(IE_ItemNumber);
         IE_UseUniqueItemsText.appendChild(IE_UseUniqueItemsCheck);
@@ -301,13 +292,6 @@
         this.blur();
     });
 
-    function ITEMENHANCERItemsUsedResetClick() {
-        ITEMENHANCERItemsUsed = 0;
-        localStorage.setItem("leafar_ITEMENHANCER.itemsUsed", ITEMENHANCERItemsUsed);
-        IE_ItemsUsedText.textContent = `Dodatek spalił ${ITEMENHANCERItemsUsed} przedmiotów`;
-        this.blur();
-    }
-    IE_ItemsUsedButton.addEventListener('click', ITEMENHANCERItemsUsedResetClick);
     //----------------------
     //END OF WINDOW SETTINGS
     //----------------------
@@ -327,11 +311,6 @@
     let ITEMENHANCERCommonItemIdList = [];
     let ITEMENHANCERItemWasEnhanced = false;
     let ITEMENHANCERMessageWasShown = false;
-    let ITEMENHANCERItemsUsed = 0;
-    if (localStorage.getItem('leafar_ITEMENHANCER.itemsUsed') !== null) {
-        ITEMENHANCERItemsUsed = localStorage.getItem('leafar_ITEMENHANCER.itemsUsed');
-        IE_ItemsUsedText.textContent = `Dodatek spalił ${ITEMENHANCERItemsUsed} przedmiotów`;
-    }
 
     function ITEMENHANCERFindItemDataFromInput() {
         if (localStorage.getItem('leafar_ITEMENHANCER.enabledCheck') === 'ON') {
@@ -423,8 +402,6 @@
                                 if(foundItems instanceof Object && typeof foundItems === 'object') {
                                     if (ITEMENHANCERCommonItemList.includes(foundItems.hid)) {
                                         ITEMENHANCERCommonItemIdList.push(foundItems.id);
-                                        ITEMENHANCERItemsUsed++;
-                                        localStorage.setItem("leafar_ITEMENHANCER.itemsUsed", ITEMENHANCERItemsUsed);
                                     }
                                 }
                             });
@@ -440,8 +417,6 @@
                             setTimeout(() => {
                                 Engine.crafting.triggerClose();
                             }, 500);
-                            let ItemsUsedTotal = localStorage.getItem("leafar_ITEMENHANCER.itemsUsed");
-                            IE_ItemsUsedText.textContent = `Dodatek przepalił ${ItemsUsedTotal} przedmiotów.`;
                         }
                     }
 
@@ -495,8 +470,6 @@
                         Object.values(g.hItems).forEach((foundItems) => {
                             if (ITEMENHANCERCommonItemList.includes(foundItems.hid)) {
                                 ITEMENHANCERCommonItemIdList.push(foundItems.id);
-                                ITEMENHANCERItemsUsed++;
-                                localStorage.setItem("leafar_ITEMENHANCER.itemsUsed", ITEMENHANCERItemsUsed);
                             }
                         });
                         ITEMENHANCERCommonItemList = [];
@@ -513,8 +486,6 @@
                         setTimeout(() => {
                             g.crafting.triggerClose();
                         }, 500);
-                        let ItemsUsedTotal = localStorage.getItem("leafar_ITEMENHANCER.itemsUsed");
-                        IE_ItemsUsedText.textContent = `Dodatek przepalił ${ItemsUsedTotal} przedmiotów.`;
                     }
                 }
             }
