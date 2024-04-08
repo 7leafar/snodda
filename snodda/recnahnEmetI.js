@@ -480,7 +480,9 @@
                             setTimeout(() => { }, 100);
                             _g(`enhancement&action=progress&item=${ITEMENHANCERItemId}&ingredients=${n}`);
                             ITEMENHANCERItemWasEnhanced = true;
-                            setTimeout(() => { }, 100);
+                            setTimeout(() => {
+                                g.crafting.enhancement.update();
+                            }, 100);
                         }
                         ITEMENHANCERCommonItemIdList = [];
                         setTimeout(() => {
